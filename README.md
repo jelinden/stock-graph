@@ -1,4 +1,4 @@
-#Stock graph drawer
+# Stock graph drawer
 
 Get stock graphs, single graph as an image: http://localhost:8080/stock/KMI
 
