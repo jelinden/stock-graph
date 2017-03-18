@@ -3,7 +3,7 @@
 Get stock graphs, single graph as an image: http://localhost:8080/stock/KMI
 
 or show multiple images on a html page:
-http://localhost:8080/stock/KMI
+http://localhost:8080/
 
 and get it with a size of your liking
 http://localhost:8080/graph/800/400/JNJ
