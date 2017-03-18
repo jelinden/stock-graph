@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"time"
 
+	"strconv"
+
 	"github.com/doneland/yquotes"
 	"github.com/julienschmidt/httprouter"
 	"github.com/wcharczuk/go-chart"
@@ -16,6 +18,7 @@ func main() {
 	router := httprouter.New()
 	router.GET("/", handler)
 	router.GET("/stock/:symbol", drawChart)
+	router.GET("/graph/:width/:height/:symbol", drawChart)
 	http.ListenAndServe(":8080", router)
 }
 
@@ -29,6 +32,11 @@ func handler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 func drawChart(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	yv, xv := getStock(ps.ByName("symbol"))
+	width, height := 460, 240
+	if ps.ByName("width") != "" && ps.ByName("height") != "" {
+		width, _ = strconv.Atoi(ps.ByName("width"))
+		height, _ = strconv.Atoi(ps.ByName("height"))
+	}
 	priceSeries := chart.TimeSeries{
 		Name: "SPY",
 		Style: chart.Style{
@@ -60,8 +68,8 @@ func drawChart(res http.ResponseWriter, req *http.Request, ps httprouter.Params)
 	}
 
 	graph := chart.Chart{
-		Width:  460,
-		Height: 240,
+		Width:  width,
+		Height: height,
 		XAxis: chart.XAxis{
 			Style:        chart.Style{Show: true},
 			TickPosition: chart.TickPositionBetweenTicks,
