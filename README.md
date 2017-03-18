@@ -8,6 +8,8 @@ http://localhost:8080/stock/KMI
 Uses https://github.com/doneland/yquotes to get the stock price history and
 https://github.com/wcharczuk/go-chart to draw the graphs.
 
+![screenshot](https://raw.githubusercontent.com/jelinden/stock-graph/master/screenshot.png)
+
 ## Build
 
 go get github.com/jelinden/stock-graph
