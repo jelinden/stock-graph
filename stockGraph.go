@@ -4,11 +4,10 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"time"
 
 	"strconv"
 
-	"github.com/doneland/yquotes"
+	"github.com/jelinden/stock-graph/iex"
 	"github.com/julienschmidt/httprouter"
 	"github.com/wcharczuk/go-chart"
 	"github.com/wcharczuk/go-chart/drawing"
@@ -31,7 +30,10 @@ func handler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 }
 
 func drawChart(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
-	yv, xv := getStock(ps.ByName("symbol"))
+	yv, xv, err := iex.Graph5Y(ps.ByName("symbol"))
+	if err != nil {
+		log.Println(err)
+	}
 	width, height := 460, 240
 	if ps.ByName("width") != "" && ps.ByName("height") != "" {
 		width, _ = strconv.Atoi(ps.ByName("width"))
@@ -90,19 +92,6 @@ func drawChart(res http.ResponseWriter, req *http.Request, ps httprouter.Params)
 
 	res.Header().Set("Content-Type", "image/png")
 	graph.Render(chart.PNG, res)
-}
-
-func getStock(symbol string) ([]float64, []time.Time) {
-	prices, err := yquotes.HistoryForYears(symbol, 2, yquotes.Daily)
-	if err != nil {
-		log.Println(err)
-	}
-	var closePrices, dates = []float64{}, []time.Time{}
-	for _, price := range prices {
-		closePrices = append(closePrices, price.AdjClose)
-		dates = append(dates, price.Date)
-	}
-	return closePrices, dates
 }
 
 func minIntSlice(v []float64) float64 {
