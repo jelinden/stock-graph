@@ -1,5 +1,11 @@
 # Stock graph drawer
 
+## Requirements
+
+- Go 1.11
+
+## Usage
+
 Get stock graphs, single graph as an image: http://localhost:8080/stock/KMI
 
 or show multiple images on a html page:
@@ -15,8 +21,8 @@ https://github.com/wcharczuk/go-chart to draw the graphs.
 
 ## Build
 
-go get github.com/jelinden/stock-graph
+`go get github.com/jelinden/stock-graph`
 
-cd $GOPATH/src/github.com/jelinden/stock-graph
+`cd $GOPATH/src/github.com/jelinden/stock-graph`
 
-go build && ./stock-graph
+`go build -mod=vendor && ./stock-graph`
