@@ -1,3 +1,9 @@
+# DEPRECATED
+
+IEX doesn't have a free plan anymore: https://iexcloud.io/pricing
+
+---
+
 # Stock graph drawer
 
 ## Requirements
